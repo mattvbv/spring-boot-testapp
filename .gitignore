@@ -1,0 +1,10 @@
+**/target
+**/META-INF
+**/.classpath
+**/.project
+**/.settings
+*/.gitignore
+**/.DS_Store
+**/*.iml
+**/.idea
+**/.springBeans

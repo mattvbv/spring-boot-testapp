@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  description: Test App API
+  version: 1.0.0
+  title: Test App API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: 'apiteam@swagger.io'
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+- name: loan
+  description: Everything about Loans
+paths:
+  /loans:
+    post:
+      tags:
+      - loan
+      operationId: saveNewLoan
+      summary: Stores a new loan into the database
+      description: Stores a new loan into the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Loan'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'              
+  /loans/{loanId}:
+    get:
+      tags:
+      - loan
+      operationId: findLoanById
+      summary: Find the loan identified by the given identifier
+      description: Find the loan identified by the given identifier
+      parameters:
+        - name: loanId
+          in: path
+          description: The identifier of the loan
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        '404':
+          description: Not found
+  /loans/persons/{nationalIdentificationNumber}:
+    get:
+      tags:
+      - loan
+      operationId: findLoansByNationalIdentificationNumber
+      summary: Find loans for a given person
+      description: Find loans for a given person
+      parameters:
+        - name: nationalIdentificationNumber
+          in: path
+          description: The national identification number of the person
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Loan'
+        '404':
+          description: Not found
+  /loans/persons/{nationalIdentificationNumber}/page:
+    get:
+      tags:
+      - loan
+      operationId: findPageLoansByNationalIdentificationNumber
+      summary: Find loans for a given person
+      description: Find loans for a given person (with pagination support)
+      parameters:
+        - name: nationalIdentificationNumber
+          in: path
+          description: The national identification number of the person
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanPage'
+        '404':
+          description: Not found
+components:
+  schemas:
+    Loan:
+      type: object
+      properties:
+        id:
+          type: string
+        nationalIdentificationNumber:
+          type: string
+          example: 123456789
+          description: The national identification number of the person
+        numberOfLatePayments:
+          type: integer
+          format: int32
+        startYear:
+          type: integer
+          format: int32
+        status:
+          type: string
+          enum:
+            - ONGOING
+            - REPAID
+            - DEFAULTED
+            - CANCELLED
+    LoanPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Loan'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages: 
+          type: integer
+          format: int32
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/bfcloudtraining/testapp/1.0.0
