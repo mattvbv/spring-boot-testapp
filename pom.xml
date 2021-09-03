@@ -22,8 +22,8 @@
 		<dozer.version>5.5.1</dozer.version>
 		<logstash.logback.encoder.version>5.3</logstash.logback.encoder.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.boot.version>2.2.4.RELEASE</spring.boot.version>
-		<spring.cloud.dependencies.version>Hoxton.SR1</spring.cloud.dependencies.version>
+		<spring.boot.version>2.4.5</spring.boot.version>
+		<spring.cloud.dependencies.version>2020.0.2</spring.cloud.dependencies.version>
 	</properties>
 
 
